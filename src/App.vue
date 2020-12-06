@@ -1,5 +1,5 @@
 <template>
-<Calculator></Calculator>
+  <Calculator></Calculator>
 </template>
 
 <script>
@@ -13,9 +13,15 @@ export default {
 </script>
 
 <style lang="scss">
-body{
+body {
   background: #333;
   color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
 }
 </style>

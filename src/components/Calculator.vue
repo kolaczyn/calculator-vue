@@ -1,13 +1,32 @@
 <template>
-  <h1>Hello World</h1>
+  <section class="calculator">
+    <InputField></InputField>
+    <Numpad></Numpad>
+  </section>
 </template>
 
 <script>
-export default {
+import InputField from './InputField.vue';
+import Numpad from './Numpad.vue';
 
+export default {
+  data() {
+    return {
+      inputValue: '',
+    };
+  },
+  components: {
+    InputField,
+    Numpad,
+  },
 };
 </script>
 
 <style lang="scss">
-
+.calculator {
+  background: #ddd;
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 2rem;
+}
 </style>
