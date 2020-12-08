@@ -3,11 +3,13 @@
     <InputDisplay :inputValue="inputValue" />
     <Numpad />
   </section>
+  <Debug :inputValue="inputValue" :prevValue="prevValue" :operation="operation" :memory="memory"/>
 </template>
 
 <script>
 import InputDisplay from './InputDisplay.vue';
 import Numpad from './Numpad.vue';
+import Debug from './Debug.vue';
 
 export default {
   data() {
@@ -15,11 +17,13 @@ export default {
       inputValue: '0',
       prevValue: '0',
       operation: null,
+      memory: '0',
     };
   },
   components: {
     InputDisplay,
     Numpad,
+    Debug,
   },
   computed: {
     numInputValue() {
@@ -35,9 +39,7 @@ export default {
       else if (label === '.' && !this.inputValue.includes('.')) {
         this.inputValue += '.';
       } else if (label === '√') {
-        this.inputValue = Math.sqrt(Number(this.inputValue))
-          .toFixed(8)
-          .toString();
+        this.handleRoot();
       } else if (label === 'C-CE') {
         this.resetNumbers();
       } else if (
@@ -49,6 +51,16 @@ export default {
         this.handleOperation(label);
       } else if (label === '=') {
         this.handleEquals();
+      } else if (label === '+/-') {
+        this.inputValue = (-this.inputValue).toString();
+      } else if (label === 'M-') {
+        this.memory = (-this.inputValue).toString();
+        this.inputValue = '0';
+      } else if (label === 'M+') {
+        this.memory = this.inputValue;
+        this.inputValue = '0';
+      } else if (label === 'MRC') {
+        this.inputValue = this.memory;
       }
     },
     handleNumberInput(label) {
@@ -58,6 +70,8 @@ export default {
     resetNumbers() {
       this.inputValue = '0';
       this.prevValue = '0';
+      this.operation = null;
+      this.memory = '0';
     },
     handleOperation(operation) {
       this.prevValue = this.inputValue;
@@ -65,20 +79,23 @@ export default {
       this.operation = operation;
       // if (this.operation)
     },
+    handleRoot() {
+      this.inputValue = Math.sqrt(Number(this.inputValue)).toString();
+    },
     handleEquals() {
       if (!this.operation) return;
       switch (this.operation) {
         case '+':
-          this.inputValue = (this.numInputValue + this.numPrevValue).toString();
+          this.inputValue = (this.numPrevValue + this.numInputValue).toString();
           break;
         case '-':
-          this.inputValue = (this.numInputValue - this.numPrevValue).toString();
+          this.inputValue = (this.numPrevValue - this.numInputValue).toString();
           break;
         case '×':
-          this.inputValue = (this.numInputValue * this.numPrevValue).toString();
+          this.inputValue = (this.numPrevValue * this.numInputValue).toString();
           break;
         case '÷':
-          this.inputValue = (this.numInputValue / this.numPrevValue).toString();
+          this.inputValue = (this.numPrevValue / this.numInputValue).toString();
           break;
         default:
           this.inputValue = 'something went wrong';

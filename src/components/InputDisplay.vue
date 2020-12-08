@@ -25,5 +25,7 @@ export default {
   border: none;
   width: 100%;
   font-size: 2.5rem;
+
+  margin-bottom: 2rem;
 }
 </style>

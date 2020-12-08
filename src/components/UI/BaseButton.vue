@@ -16,7 +16,7 @@
   border: none;
   cursor: pointer;
   font-family: inherit;
-  transition: background 150ms;
+  transition: all 150ms;
 
   &:hover {
     background: rgba(black, 0.9);
