@@ -1,13 +1,13 @@
-export const upperLabels = ['+/-', '%', 'sqrt', 'CE', 'ON/C'];
+export const upperLabels = ['+/-', '%', '√', 'CE', 'ON/C'];
 export const lowerLabels = [
   'MRC',
   'M-',
   'M+',
-  '/',
+  '÷',
   '7',
   '8',
   '9',
-  '*',
+  '×',
   '4',
   '5',
   '6',

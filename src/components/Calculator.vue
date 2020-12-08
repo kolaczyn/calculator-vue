@@ -1,6 +1,6 @@
 <template>
   <section class="calculator">
-    <InputField></InputField>
+    <InputField :inputValue="inputValue"></InputField>
     <Numpad></Numpad>
   </section>
 </template>
@@ -19,14 +19,26 @@ export default {
     InputField,
     Numpad,
   },
+  methods: {
+    handleButtonClick(label) {
+      this.inputValue = label;
+      console.log(label);
+    },
+  },
+  provide() {
+    return {
+      onButtonClick: this.handleButtonClick,
+    };
+  },
 };
 </script>
 
 <style lang="scss">
 .calculator {
-  background: #ddd;
-  max-width: 600px;
+  background: white;
+  max-width: 800px;
   margin: 1rem auto;
-  padding: 2rem;
+  padding: 8rem 1.5rem 4rem;
+  border-radius: 2rem;
 }
 </style>

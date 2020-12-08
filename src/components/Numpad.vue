@@ -1,17 +1,19 @@
 <template lang="">
   <section>
+    <!-- I dont like the repetition in this code, -->
+    <!-- but I get some weird errors when I try to loop through an array of arrays -->
     <ul class="upper-btns">
       <li v-for="label in upperBtnsLabels" :key="label">
-        <button>
+        <base-button @click="onButtonClick(label)">
           {{ label }}
-        </button>
+        </base-button>
       </li>
     </ul>
     <ul class="lower-btns">
       <li v-for="label in lowerBtnsLabels" :key="label">
-        <button>
+        <base-button @click="onButtonClick(label)">
           {{ label }}
-        </button>
+        </base-button>
       </li>
     </ul>
   </section>
@@ -20,12 +22,8 @@
 import { upperLabels, lowerLabels } from '../assets/btnsLabels';
 
 export default {
-  data() {
-    return {
-
-      // button lables probably don't have to be in data, since the labels are 'static'
-    };
-  },
+  inject: ['onButtonClick'],
+  // is this a good way of doing things?
   computed: {
     lowerBtnsLabels() {
       return lowerLabels;
@@ -41,12 +39,20 @@ export default {
   grid-template-columns: repeat(5, 1fr);
   margin-bottom: 1rem;
   margin-top: 1rem;
+  grid-gap: 0.7rem;
+  button {
+    font-size: 2rem;
+  }
 }
 .lower-btns {
+  grid-gap: 1rem;
   grid-template-rows: repeat(5, 1fr);
   grid-template-columns: repeat(4, 1fr);
+  button {
+    font-size: 3rem;
+  }
   :last-child {
-    /* for the longer + button */
+    /* for the longer '+' button */
     grid-row: 4 / span 2;
     grid-column: 4 / span 1;
     button {
@@ -57,19 +63,8 @@ export default {
 .upper-btns,
 .lower-btns {
   display: grid;
-  grid-gap: 1rem;
-  button {
-    width: 100%;
-    font-size: 3rem;
-  }
 }
 ul {
   list-style-type: none;
-}
-button {
-  background: #222;
-  color: #fff;
-  border: none;
-  cursor: pointer;
 }
 </style>
