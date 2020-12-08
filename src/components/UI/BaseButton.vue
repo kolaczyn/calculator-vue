@@ -25,7 +25,7 @@
   &--primary {
     background: rgba(orange, .95);
 
-    &:hover {
+    &:hover, &:a {
     background: rgba(orange, .85);
     }
   }

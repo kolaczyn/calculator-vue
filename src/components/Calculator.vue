@@ -1,7 +1,7 @@
 <template>
   <section class="calculator">
-    <InputDisplay :inputValue="inputValue"/>
-    <Numpad/>
+    <InputDisplay :inputValue="inputValue" />
+    <Numpad />
   </section>
 </template>
 
@@ -13,13 +13,21 @@ export default {
   data() {
     return {
       inputValue: '0',
-      firstNumber: '',
-      secondNumber: '',
+      prevValue: '0',
+      operation: null,
     };
   },
   components: {
     InputDisplay,
     Numpad,
+  },
+  computed: {
+    numInputValue() {
+      return parseFloat(this.inputValue);
+    },
+    numPrevValue() {
+      return parseFloat(this.prevValue);
+    },
   },
   methods: {
     handleButtonClick(label) {
@@ -30,6 +38,17 @@ export default {
         this.inputValue = Math.sqrt(Number(this.inputValue))
           .toFixed(8)
           .toString();
+      } else if (label === 'C-CE') {
+        this.resetNumbers();
+      } else if (
+        label === '+'
+        || label === '-'
+        || label === '×'
+        || label === '÷'
+      ) {
+        this.handleOperation(label);
+      } else if (label === '=') {
+        this.handleEquals();
       }
     },
     handleNumberInput(label) {
@@ -37,8 +56,35 @@ export default {
       else this.inputValue += label;
     },
     resetNumbers() {
-      this.firstNumber = '';
-      this.secondNumber = '';
+      this.inputValue = '0';
+      this.prevValue = '0';
+    },
+    handleOperation(operation) {
+      this.prevValue = this.inputValue;
+      this.inputValue = '0';
+      this.operation = operation;
+      // if (this.operation)
+    },
+    handleEquals() {
+      if (!this.operation) return;
+      switch (this.operation) {
+        case '+':
+          this.inputValue = (this.numInputValue + this.numPrevValue).toString();
+          break;
+        case '-':
+          this.inputValue = (this.numInputValue - this.numPrevValue).toString();
+          break;
+        case '×':
+          this.inputValue = (this.numInputValue * this.numPrevValue).toString();
+          break;
+        case '÷':
+          this.inputValue = (this.numInputValue / this.numPrevValue).toString();
+          break;
+        default:
+          this.inputValue = 'something went wrong';
+          throw new Error('invalid operation');
+      }
+      this.operation = null;
     },
   },
   provide() {
