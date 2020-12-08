@@ -1,5 +1,8 @@
-export const upperLabels = ['+/-', '%', '√', 'CE', 'ON/C'];
-export const lowerLabels = [
+const labels = [
+  'C-CE',
+  '+/-',
+  '√',
+  '%',
   'MRC',
   'M-',
   'M+',
@@ -20,3 +23,5 @@ export const lowerLabels = [
   '=',
   '+',
 ];
+
+export default labels;

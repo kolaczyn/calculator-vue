@@ -2,16 +2,14 @@
   <section>
     <!-- I dont like the repetition in this code, -->
     <!-- but I get some weird errors when I try to loop through an array of arrays -->
-    <ul class="upper-btns">
-      <li v-for="label in upperBtnsLabels" :key="label">
-        <base-button @click="onButtonClick(label)">
-          {{ label }}
-        </base-button>
-      </li>
-    </ul>
-    <ul class="lower-btns">
-      <li v-for="label in lowerBtnsLabels" :key="label">
-        <base-button @click="onButtonClick(label)">
+    <ul class="numpad">
+      <li v-for="label in labels" :key="label">
+        <!-- It seems wasteful to check for a specific label for every single array item,
+        considering the fact, tha we know that it's alwayss the first one -->
+        <base-button
+        class="btn"
+        :class="label==='C-CE' ? 'btn--primary': null"
+        @click="onButtonClick(label)">
           {{ label }}
         </base-button>
       </li>
@@ -19,41 +17,33 @@
   </section>
 </template>
 <script>
-import { upperLabels, lowerLabels } from '../assets/btnsLabels';
+import labels from '../assets/buttonLabels';
 
 export default {
   inject: ['onButtonClick'],
   // is this a good way of doing things?
+  // There are too many variables named 'labels'
   computed: {
-    lowerBtnsLabels() {
-      return lowerLabels;
-    },
-    upperBtnsLabels() {
-      return upperLabels;
+    labels() {
+      return labels;
     },
   },
 };
 </script>
 <style lang="scss">
-.upper-btns {
-  grid-template-columns: repeat(5, 1fr);
+.numpad {
+  grid-template-columns: repeat(4, 1fr);
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
   margin-bottom: 1rem;
   margin-top: 1rem;
   grid-gap: 0.7rem;
   button {
     font-size: 2rem;
   }
-}
-.lower-btns {
-  grid-gap: 1rem;
-  grid-template-rows: repeat(5, 1fr);
-  grid-template-columns: repeat(4, 1fr);
-  button {
-    font-size: 3rem;
-  }
   :last-child {
     /* for the longer '+' button */
-    grid-row: 4 / span 2;
+    grid-row: 5 / span 2;
     grid-column: 4 / span 1;
     button {
       height: 100%;
